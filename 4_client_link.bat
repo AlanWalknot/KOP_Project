@@ -1,1 +1,0 @@
-g++ ./client/build/client.o ./client/build/lib/IHelper.o ./client/build/lib/Helper.o -o ./client/build/client.exe
