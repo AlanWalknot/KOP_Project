@@ -21,7 +21,7 @@ class Helper : public IBasicHelper, public IAdvancedHelper {
         
 };
 
-class HelperClassFactory : public IHelperClassFactory
+class HelperClassFactory : public IHelperClassFactory, public IClassFactory
 {
     private:
         int refCount;
@@ -34,6 +34,7 @@ class HelperClassFactory : public IHelperClassFactory
         virtual ULONG __stdcall Release();
 
         virtual HRESULT __stdcall CreateInstance(IUnknown* pUnknownOuter,const IID& iid, void** object);
+        virtual HRESULT __stdcall LockServer(BOOL bLock);
         
         virtual HRESULT __stdcall CreateInstance(const IID& iid, void** object, int password);
 

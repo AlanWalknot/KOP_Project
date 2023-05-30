@@ -25,7 +25,7 @@ class ExtraHelper: public IBasicHelper, public IAdvancedHelper, public IExtraHel
 
 };
 
-class ExtraHelperClassFactory : public IClassFactory, public IExtraHelperClassFactory {
+class ExtraHelperClassFactory : public IExtraHelperClassFactory, public IClassFactory {
     private:
         int refCount;
     public:

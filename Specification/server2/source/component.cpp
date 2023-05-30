@@ -56,6 +56,7 @@ ExtraHelper::~ExtraHelper() {
 HRESULT ExtraHelper::QueryInterface(const IID& iid, void** object) {
     std::cout << "ExtraHelper::QueryInterface()" << std::endl;
 
+
     if (iid == Constants::IID_IUnknown)
     {
         *object = (IUnknown*) (IBasicHelper*) this;
@@ -133,6 +134,11 @@ ExtraHelperClassFactory::~ExtraHelperClassFactory() {
     std::cout << "ExtraHelperClassFactory::~ExtraHelperClassFactory()" << std::endl;
 }
 
+HRESULT ExtraHelperClassFactory::LockServer(BOOL bLock) {
+    std::cout << "ExtraHelperClassFactory::LockServer()" << std::endl;
+    return S_OK;
+}
+
 
 HRESULT ExtraHelperClassFactory ::QueryInterface(const IID& iid, void** object) {
     std::cout << "ExtraHelperClassFactory::QueryInterface()" << std::endl;
@@ -173,51 +179,34 @@ ULONG ExtraHelperClassFactory ::Release() {
 
 HRESULT ExtraHelperClassFactory::CreateInstance(IUnknown* pUnknownOuter,const IID& iid, void** object) {
     std::cout << "ExtraHelperClassFactory::CreateInstance()" << std::endl;
-    IUnknown* s = (IUnknown*) (IBasicHelper*) new ExtraHelper();
 
-    s -> AddRef();
-    HRESULT res = s->QueryInterface(iid, object);
-    s -> Release();
     
-    return res;
-}
-
-HRESULT ExtraHelperClassFactory ::CreateInstance(const IID& iid, void** object, int password)
-{
-    std::cout <<" ExtraHelperClassFactory::CreateInstance(password)" << std::endl;
-    HRESULT res = E_NOTIMPL;
-
-    if (password != NULL)
-    {
-        IUnknown* s = (IUnknown*) (IBasicHelper*) new ExtraHelper();
-
-        s -> AddRef();
-        res = s -> QueryInterface(iid, object);
-        s -> Release();
-    }
-    
-    return res;
-}
-
-extern "C" HRESULT __stdcall __declspec(dllexport) DllGetClassObject(const CLSID& clsid, const IID& iid, void** object)
-{
-    std::cout << "Export Function: GetClassObject()" << std::endl;
-
-    IUnknown* s = NULL;
-
-    if (clsid == Constants2::CLSID_ExtraHelper)
-    {
-        s = (IUnknown*) (IClassFactory*) new ExtraHelperClassFactory();
-    }
-    else
-    {
-        *object = NULL;
+    if(pUnknownOuter != NULL) {
         return E_NOTIMPL;
     }
-
-    s -> AddRef();
-    HRESULT res = s -> QueryInterface(iid, object);
-    s -> Release();
     
-    return S_OK;
+    HRESULT res = S_OK;
+
+    ExtraHelper* extraHelper = new ExtraHelper();
+
+    res = extraHelper -> QueryInterface(iid, object);
+    
+    return res;
+}
+
+HRESULT ExtraHelperClassFactory::CreateInstance(const IID& iid, void** object, int password)
+{
+    std::cout <<" ExtraHelperClassFactory::CreateInstance(password)" << std::endl;
+    std::cout << &iid;
+
+    HRESULT res = E_NOTIMPL;
+
+    if (true)
+    {
+        IUnknown* s = (IUnknown*) (IExtraHelper*) new ExtraHelper();
+
+        res = s->QueryInterface(iid, object);
+    }
+    
+    return res;
 }

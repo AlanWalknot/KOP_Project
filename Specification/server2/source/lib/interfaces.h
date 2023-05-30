@@ -16,7 +16,8 @@ class Constants {
     static IID IID_IHelperClassFactory;
 
     //GUID FOR HELPER : {ABEE2CE5-D891-4DBB-9043-6A03766C5E44}
-    static IID CLSID_Helper;
+    static CLSID CLSID_Helper;
+    static CLSID CLSID_HelperFactory;
 };
 
 

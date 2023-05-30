@@ -25,15 +25,15 @@ HRESULT Helper::QueryInterface(const IID& iid, void** object) {
 
     std::cout << "Helper::QueryInterface" << std::endl;
     
-    if (iid == IID_IUnknown)	{
+    if (iid == Constants::IID_IUnknown)	{
         *object = (IUnknown*) (IBasicHelper*) this;
     }
     
-    else if (iid == Constants::IID_IBasicHelper)    {
+    else if (iid == Constants::IID_IBasicHelper) {
         *object = static_cast<IBasicHelper*>(this);
     }
     
-    else if (iid == Constants::IID_IAdvancedHelper)    {
+    else if (iid == Constants::IID_IAdvancedHelper) {
         *object = static_cast<IAdvancedHelper*>(this);
     }
     
@@ -41,7 +41,7 @@ HRESULT Helper::QueryInterface(const IID& iid, void** object) {
         *object = NULL;
         return E_NOINTERFACE;
     }
-    
+
     this -> AddRef();
     return S_OK;
 }
@@ -63,14 +63,17 @@ ULONG Helper::Release() {
 
 HRESULT __stdcall Helper::GetBinFiles() {
     std::cout << "Helper::GetBinFiles()" << std::endl;
+    return S_OK;
 }
 
 HRESULT Helper::DeleteBinFiles() {
     std::cout << "Helper::DeleteBinFiles()" << std::endl;
+    return S_OK;
 }
 
 HRESULT Helper::TurnOffMachine() {
     std::cout << "Helper::TurnOffMachine()" << std::endl;
+    return S_OK;
 }
 
 //-------------------------ClassFactory begins--------------------------------------
@@ -124,56 +127,37 @@ ULONG HelperClassFactory::Release()
     return refCount;
 }
 
+HRESULT HelperClassFactory::LockServer(BOOL bLock) {
+    std::cout << "HelperClassFactory::LockServer()" << std::endl;
+    return S_OK;
+}
+
 HRESULT HelperClassFactory::CreateInstance(IUnknown* pUnknownOuter,const IID& iid, void** object)
 {
     std::cout << "HelperClassFactory::CreateInstance()" << std::endl;
     
-    IUnknown* s = (IUnknown*) (IBasicHelper*) new Helper();
+   if (pUnknownOuter!=NULL)    {
+      return E_NOTIMPL;
+   };
 
-    s -> AddRef();
-    HRESULT res = s->QueryInterface(iid, object);
-    s -> Release();
-    
-    return res;
+    HRESULT res = S_OK;
+
+    Helper* helper = new Helper();
+
+    res = helper -> QueryInterface(iid, object);
 }
 
 HRESULT HelperClassFactory::CreateInstance(const IID& iid, void** object, int password)
 {
     std::cout << "HelperClassFactory::CreateInstance(password)" << std::endl;
     
-    HRESULT res = E_NOTIMPL;
+    HRESULT res = S_OK;
 
-    if (password != NULL)
-    {
-        IUnknown* s = (IUnknown*) (IBasicHelper*) new Helper();
+    Helper* helper = new Helper();
 
-        s -> AddRef();
-        res = s -> QueryInterface(iid, object);
-        s -> Release();
-    }
+    res = helper -> QueryInterface(iid, object);
+
     
     return res;
 }
 
-extern "C" HRESULT __stdcall __declspec(dllexport) DllGetClassObject(const CLSID& clsid, const IID& iid, void** object)
-{
-    std::cout << "Export Function: GetClassObject()" << std::endl;
-
-    IUnknown* s = NULL;
-
-    if (clsid == Constants::CLSID_Helper)
-    {
-        s = (IUnknown*) (IClassFactory*) new HelperClassFactory();
-    }
-    else
-    {
-        *object = NULL;
-        return E_NOTIMPL;
-    }
-
-    s -> AddRef();
-    HRESULT res = s->QueryInterface(iid, object);
-    s -> Release();
-    
-    return S_OK;
-}

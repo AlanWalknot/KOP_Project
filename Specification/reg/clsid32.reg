@@ -1,0 +1,7 @@
+Windows Registry Editor Version 5.00
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Classes\CLSID\{ABEE2CE5-D891-4DBB-9043-6A03766C5E44}]
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Classes\CLSID\{ABEE2CE5-D891-4DBB-9043-6A03766C5E44}\InprocServer32]
+@="C:\\Users\\2\\Desktop\\Coding\\Specification\\server\\build\\main.dll"
+

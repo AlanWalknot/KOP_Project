@@ -1,4 +1,28 @@
-#include "interfaces2.h"
+#include "component.h"
+
+extern "C" HRESULT __stdcall __declspec(dllexport) DllGetClassObject(const CLSID& clsid, const IID& iid, void** object)
+{
+    std::cout << "Export Function: GetClassObject()" << std::endl;
+
+    IUnknown* s = NULL;
+
+    if (clsid == Constants2::CLSID_ExtraHelper)
+    {
+        s = (IUnknown*) (IClassFactory*) new ExtraHelperClassFactory();
+    }
+    else
+    {
+        *object = NULL;
+        return E_NOTIMPL;
+    }
+
+    s -> AddRef();
+    HRESULT res = s -> QueryInterface(iid, object);
+    s -> Release();
+    
+    return S_OK;
+}
+
 
 BOOL APIENTRY DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvReserved)
 {
