@@ -1,0 +1,3 @@
+HKEY_CLASSES_ROOT\CLSID\{f414c262-6ac0-11cf-b6d1-00aa00bbbb58}\InprocServer32
+@="C:\WINDOWS\System32\jscript.dll"
+"ThreadingModel"="Both".

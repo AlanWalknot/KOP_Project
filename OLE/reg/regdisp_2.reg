@@ -1,0 +1,6 @@
+Windows Registry Editor Version 5.00
+
+[HKEY_CLASSES_ROOT\KOP.Helper]
+
+[HKEY_CLASSES_ROOT\KOP.ExtraHelper\CLSID]
+@="{D9BB0984-E8BE-4250-B559-73685FE1B5DC}"
