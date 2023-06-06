@@ -20,6 +20,7 @@
 
     //GUID FOR HELPER : {ABEE2CE5-D891-4DBB-9043-6A03766C5E44}
     CLSID Constants::CLSID_Helper = {0xABEE2CE5, 0xD891, 0x4DBB, {0x90, 0x43, 0x6A, 0x03, 0x76, 0x6C, 0x5E, 0x44}};
+    CLSID Constants2::CLSID_ExtraHelper = {0xD9BB0984, 0xE8BE, 0x4250, {0xB5,0x59, 0x73, 0x68, 0x5F, 0xE1, 0xB5, 0xDC}};
 
 
 int main() {
@@ -32,11 +33,15 @@ int main() {
 
     CLSID CLSID_Helper;
     CLSID CLSID_ExtraHelper;
+
+    CLSID CLSID_CurrentHelper;
     {
     
-        const wchar_t* progID = L"Helper";
+        const wchar_t* progID = L"KOP.ExtraHelper";
         
-        HRESULT resCLSID_ProgID = CLSIDFromProgID(progID, &CLSID_Helper);
+        if(progID == L"KOP.Helper") {
+
+            HRESULT resCLSID_ProgID = CLSIDFromProgID(progID, &CLSID_Helper);
 
         if(!(SUCCEEDED(resCLSID_ProgID))) {
             throw "No CLSID form ProgID";
@@ -44,12 +49,28 @@ int main() {
         
         else {
             std::cout << "CLSID form ProgID OK!" << std::endl;
+            CLSID_CurrentHelper = CLSID_Helper;
+        }
+        }
+        
+        else if (progID == L"KOP.ExtraHelper") {
+
+            HRESULT resCLSID_ProgID = CLSIDFromProgID(progID, &CLSID_ExtraHelper);
+
+        if(!(SUCCEEDED(resCLSID_ProgID))) {
+            throw "No CLSID form ProgID";
+        }
+        
+        else {
+            std::cout << "CLSID form ProgID OK!" << std::endl;
+            CLSID_CurrentHelper = CLSID_ExtraHelper;
+        }
         }
     }
 
     IClassFactory* pCF = NULL;
 
-    HRESULT resFactory = CoGetClassObject(CLSID_Helper, CLSCTX_INPROC_SERVER, NULL,
+    HRESULT resFactory = CoGetClassObject(CLSID_CurrentHelper, CLSCTX_INPROC_SERVER, NULL,
                                          Constants::IID_IClassFactory, (void**)&pCF);
     if(!(SUCCEEDED(resFactory))) throw "No factory";
 

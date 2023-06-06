@@ -28,7 +28,7 @@ BOOL APIENTRY DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvReserved)
     switch (fdwReason)
     {
         case DLL_PROCESS_ATTACH:
-            std::cout<<"PROCESS MANAGER DLL CONNECTED"<<std::endl;
+            //std::cout<<"PROCESS MANAGER DLL CONNECTED"<<std::endl;
             break;
 
         case DLL_PROCESS_DETACH:

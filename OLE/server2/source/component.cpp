@@ -124,13 +124,6 @@ HRESULT __stdcall ExtraHelper::GetIDsOfNames(REFIID riid, LPOLESTR* rgszNames, U
 
     if(cNames != 1) {return E_NOTIMPL;}
 
-    /* Отладочные сообщения
-    const wchar_t* src = rgszNames[0];
-    char* dest = new char[32];
-    wcstombs(dest,src,32);
-    printf(dest); printf("\n");
-    */
-
    if(wcscmp(rgszNames[0], L"GetBinFiles") == 0) {
         rgDispId[0] == 1;
    }

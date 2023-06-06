@@ -6,7 +6,6 @@
 class Helper : public IBasicHelper, public IAdvancedHelper, public IDispatch {
     private:
         int refCount;
-        //Тут поле для присвоения значений при необходимости
     public:
         Helper();
         ~Helper();
@@ -25,7 +24,7 @@ class Helper : public IBasicHelper, public IAdvancedHelper, public IDispatch {
         virtual HRESULT __stdcall Invoke(DISPID dispIdMember, REFIID riid, LCID lcid, WORD wFlags, DISPPARAMS* pDIspParams,
                                         VARIANT* pVarResult, EXCEPINFO* pExcepInfo, UINT* puArgErr);
 
-        virtual HRESULT __stdcall GetTypeInfoCount(UINT* pctinfo); // Заглушка
+        virtual HRESULT __stdcall GetTypeInfoCount(UINT* pctinfo);
         virtual HRESULT __stdcall GetTypeInfo(UINT iTInfo, LCID lcid, ITypeInfo** ppTInfo);
 };
 
